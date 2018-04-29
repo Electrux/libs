@@ -1,0 +1,27 @@
+name: vectors
+version: 0.1
+lang: c
+std: 11
+compile_flags: -O2
+license: bsd3
+author:
+  name: Electrux
+  email: ckhandelwal13@gmail.com
+libs:
+  []
+builds:
+  - name: cvec
+    type: lib
+    build_type: static
+    main_src: src/vector.c
+    other_src:
+      - src/(.*).c
+    exclude:
+      []
+  - name: vec_main
+    type: test
+    main_src: tests/vec_main.c
+    other_src:
+      - src/(.*).c
+    exclude:
+      - src/main.c
