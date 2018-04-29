@@ -11,7 +11,7 @@
 
 # Build files #
 ###############
-bin/
+testbin/
 lib/
 build/
 buildfiles/
