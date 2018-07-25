@@ -1,4 +1,4 @@
-name: c_vec
+name: c_strings
 version: 0.0.1
 lang: c
 std: 11
@@ -12,7 +12,7 @@ author:
 libs:
   []
 builds:
-  - name: c_vec
+  - name: c_strings
     type: bin
     inc_flags: ""
     lib_flags: ""
