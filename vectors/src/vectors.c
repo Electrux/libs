@@ -8,6 +8,9 @@
 	before using or altering the project.
 */
 
+// To enable strdup, strndup when using strict standards (c99 for exampple)
+#define _DEFAULT_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
