@@ -1,0 +1,47 @@
+name: colored_display
+version: 0.0.1
+lang: c
+std: 11
+compile_flags: -O2
+vars:
+  []
+license: bsd3
+author:
+  name: Electrux
+  email: ElectruxRedsworth@gmail.com
+libs:
+  - name: ICU
+    version: 62.1
+    inc_flags: ""
+    lib_flags: -licuio
+builds:
+  - name: variadic_params
+    type: test
+    inc_flags: ""
+    lib_flags: ""
+    pre_exec: ""
+    main_src: tests/variadic_params.c
+    other_src:
+      - src/(.*).c
+    exclude:
+      - src/main.c
+  - name: colors
+    type: test
+    inc_flags: ""
+    lib_flags: ""
+    pre_exec: ""
+    main_src: tests/colors.c
+    other_src:
+      - src/(.*).c
+    exclude:
+      - src/main.c
+  - name: invalid_colors
+    type: test
+    inc_flags: ""
+    lib_flags: ""
+    pre_exec: ""
+    main_src: tests/invalid_colors.c
+    other_src:
+      - src/(.*).c
+    exclude:
+      - src/main.c
