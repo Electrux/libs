@@ -3,7 +3,6 @@
 	All rights reserved.
 	Using the BSD 3-Clause license for the project,
 	main LICENSE file resides in project's root directory.
-
 	Please read that file and understand the license terms
 	before using or altering the project.
 */
@@ -17,18 +16,22 @@ typedef struct
 	int size;
 	int data_size;
 	void ** data;
-} Vector;
+} Vec;
 
-Vector * vec_create( int data_size );
-void vec_delete( Vector ** v );
+Vec * vec_create( int data_size );
+void vec_delete( Vec ** v );
 
-void vec_add( Vector * v, const void * data );
+void vec_add( Vec * v, const void * data );
 
-void * vec_get_data( Vector * v, int loc );
-void * vec_get_data_copy( Vector * v, int loc );
+void * vec_get_data( const Vec * v, int loc );
+void * vec_get_data_copy( const Vec * v, int loc );
 
-void vec_del_at( Vector * v, int loc );
+int vec_count( const Vec * v );
 
-void vec_clear( Vector * v );
+void vec_del_at( Vec * v, int loc );
+
+void vec_clear( const Vec * v );
+
+void vec_sort( Vec * v, int ( * sorter )( const void * a, const void * b ) );
 
 #endif // VECTORS_H
