@@ -3,7 +3,6 @@
 	All rights reserved.
 	Using the BSD 3-Clause license for the project,
 	main LICENSE file resides in project's root directory.
-
 	Please read that file and understand the license terms
 	before using or altering the project.
 */
@@ -16,16 +15,16 @@
 #include <string.h>
 #include <assert.h>
 
-#include "../include/vectors.h"
+#include "vectors.h"
 
 #define ASSERT_MSG( is_true, msg ) if( is_true ) \
 		{ fprintf( stderr, msg ); assert( !( is_true ) ); }
 
-#define CHECK_NULL_VEC( v ) ASSERT_MSG( v == NULL, "The given vector is empty!" )
+#define CHECK_NULL_VEC( v ) ASSERT_MSG( ( ( v ) == NULL ), "The given vector is empty!" )
 
-Vector * vec_create( int data_size )
+Vec * vec_create( int data_size )
 {
-	Vector * tmp = ( Vector * )malloc( sizeof( Vector ) );
+	Vec * tmp = ( Vec * )malloc( sizeof( Vec ) );
 	if( tmp == NULL ) return NULL;
 
 	tmp->data_size = data_size;
@@ -36,20 +35,21 @@ Vector * vec_create( int data_size )
 	return tmp;
 }
 
-void vec_delete( Vector ** v )
+void vec_delete( Vec ** v )
 {
 	if( v == NULL ) {
-		fprintf( stderr, "The given vector pointer is null!" );
+		fprintf( stderr, "The given vector pointer pointer is null!" );
 		assert( v != NULL );
 	}
 
+	CHECK_NULL_VEC( * v );
 	vec_clear( * v );
 
 	free( * v );
 	* v = NULL;
 }
 
-void vec_add( Vector * v, const void * data )
+void vec_add( Vec * v, const void * data )
 {
 	CHECK_NULL_VEC( v );
 	// Double the vector size if full
@@ -63,7 +63,7 @@ void vec_add( Vector * v, const void * data )
 	v->count++;
 }
 
-void * vec_get_data( Vector * v, int loc )
+void * vec_get_data( const Vec * v, int loc )
 {
 	CHECK_NULL_VEC( v );
 	ASSERT_MSG( loc >= v->count,
@@ -71,13 +71,22 @@ void * vec_get_data( Vector * v, int loc )
 	return v->data[ loc ];
 }
 
-void * vec_get_data_copy( Vector * v, int loc )
+void * vec_get_data_copy( const Vec * v, int loc )
 {
+	CHECK_NULL_VEC( v );
+	ASSERT_MSG( loc >= v->count,
+		    "Location entered is bigger than total elements in the vector" );
 	if( v->data_size <= 0 ) return strdup( ( const char * )vec_get_data( v, loc ) );
 	return strndup( ( const char * )vec_get_data( v, loc ), v->data_size );
 }
 
-void vec_del_at( Vector * v, int loc )
+int vec_count( const Vec * v )
+{
+	CHECK_NULL_VEC( v );
+	return v->count;
+}
+
+void vec_del_at( Vec * v, int loc )
 {
 	CHECK_NULL_VEC( v );
 	ASSERT_MSG( loc >= v->count,
@@ -94,10 +103,17 @@ void vec_del_at( Vector * v, int loc )
 	}
 }
 
-void vec_clear( Vector * v )
+void vec_clear( const Vec * v )
 {
 	CHECK_NULL_VEC( v );
 	for( int i = 0; i < v->count; ++i ) {
 		free( v->data[ i ] );
 	}
+}
+
+void vec_sort( Vec * v, int ( * sorter )( const void * a, const void * b ) )
+{
+	CHECK_NULL_VEC( v );
+	if( v->count <= 0 ) return;
+	qsort( * v->data, v->count, sizeof( v->data[ 0 ] ), sorter );
 }
