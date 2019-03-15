@@ -16,22 +16,23 @@ typedef struct
 	int size;
 	int data_size;
 	void ** data;
-} Vec;
+	void ( * data_del_func )( const void * data );
+} vec_t;
 
-Vec * vec_create( int data_size );
-void vec_delete( Vec ** v );
+vec_t * vec_create( int data_size, void ( * data_del_func )( const void * data ) );
+void vec_destroy( vec_t ** v );
 
-void vec_add( Vec * v, const void * data );
+void vec_add( vec_t * v, const void * data );
 
-void * vec_get_data( const Vec * v, int loc );
-void * vec_get_data_copy( const Vec * v, int loc );
+const void * vec_get_data( const vec_t * v, int loc );
+void * vec_get_data_copy( const vec_t * v, int loc );
 
-int vec_count( const Vec * v );
+int vec_count( const vec_t * v );
 
-void vec_del_at( Vec * v, int loc );
+void vec_del_at( vec_t * v, int loc );
 
-void vec_clear( const Vec * v );
+void vec_clear( const vec_t * v );
 
-void vec_sort( Vec * v, int ( * sorter )( const void * a, const void * b ) );
+void vec_sort( vec_t * v, int ( * sorter )( const void * a, const void * b ) );
 
 #endif // VECTORS_H
