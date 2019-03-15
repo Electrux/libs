@@ -16,22 +16,14 @@
 
 int main()
 {
-	Vector * v = vec_create( 0 );
+	vec_t * v = vec_create( 0, NULL );
 
-	for( int i = 0; i < 100; ++i ) {
-		char text[ 200 ];
-		sprintf( text, "Hello world %d!", i );
-		fprintf( stdout, "Entering in vector at %d\tStats: Count: %d, Size: %d\n", i, v->count, v->size );
-		vec_add( v, text );
+	for( int i = 0; i < 10000000; ++i ) {
+		vec_add( v, "some_text" );
 	}
 
-	for( int i = 21; i < 40; ++i ) vec_del_at( v, 20 );
+	for( int i = 0; i < 10000000; ++i ) vec_del_at( v, vec_count( v ) - 1 );
 
-	for( int i = 0; i < v->count; ++i ) {
-		fprintf( stdout, "Data %d: %s\n", i, vec_get_data( v, i ) );
-	}
-	fprintf( stdout, "Count is: %d\n", v->count );
-
-	vec_delete( & v );
+	vec_destroy( & v );
 	return 0;
 }

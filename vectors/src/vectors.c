@@ -47,10 +47,11 @@ void vec_destroy( vec_t ** v )
 	}
 
 	CHECK_NULL_VEC( * v );
+
 	vec_clear( * v );
 	free( ( * v )->data );
-
 	free( * v );
+
 	* v = NULL;
 }
 
