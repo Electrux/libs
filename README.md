@@ -1,2 +1,2 @@
-# clibs
-Libraries for C language
+# libs
+Libraries for various languages
